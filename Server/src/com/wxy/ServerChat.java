@@ -14,11 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * @author Administrator
- * @Auther: wuxy
- * @Date: 2021/3/2 - 03 - 02 - 20:54
- * @Description: com.wxy
- * @version: 1.0
+ *
  */
 public class ServerChat {
     //这是一个main方法，是程序的入口：
@@ -73,7 +69,7 @@ class ServerJframe extends JFrame {
                         serverSocket = new ServerSocket(PORT);
                     }
                     isStart = true;
-                    //startServer();
+                    //startServer();//startSever抛出的错误
                     serverTa.append("服务器已经启动啦！ \n");
                 } catch (Exception e1) {
                     e1.printStackTrace();
@@ -100,11 +96,7 @@ class ServerJframe extends JFrame {
             }
         });
 
-        /**
-         * 服务器窗口关闭应该停止服务器，需改进的代码
-         */
-        // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // serverTa.setEditable(false);
+
         this.setVisible(true);
         startServer();
     }
@@ -155,7 +147,7 @@ class ServerJframe extends JFrame {
     }*/
 
     /**
-     * @author 武新宇
+     *
      * @deprecated 内部类声明 对象 这个对象是属于服务器端的一个连接对象
      */
     class ClientCoon implements Runnable {
@@ -163,10 +155,6 @@ class ServerJframe extends JFrame {
 
         public ClientCoon(Socket socket) {
             this.socket = socket;
-            /**
-             * 线程启动在这里：
-             * 初始化方法里 初始化一个线程 ，线程中封装的是自己，做整个线程的调用
-             */
             (new Thread(this)).start();
         }
 
@@ -179,11 +167,11 @@ class ServerJframe extends JFrame {
                 while (isStart) {
                     //readUTF()是一种阻塞方法，接一句就执行完了，所以循环中
                     String str = dataInputStream.readUTF();
-                    System.out.println("\n" + socket.getInetAddress() + "|" + socket.getPort() + "说" + str + "\n");
-                    serverTa.append("\n" + socket.getInetAddress() + "|" + socket.getPort() + "说" + str + "\n");
+                    System.out.println( str + "\n");
+                    serverTa.append( str + "\n");
                     //服务器向每个客户端发送别的客户端发来的信息
                     // 遍历ccList，调用send方法,在客户端里接受应该是多线程的接受
-                    String strSend = "\n" + socket.getInetAddress() + "|" + socket.getPort() + "说" + str + "\n";
+                    String strSend =  str + "\n";
                     Iterator<ClientCoon> iterator = ccList.iterator();
                     while (iterator.hasNext()) {
                         ClientCoon clientCoon = iterator.next();
